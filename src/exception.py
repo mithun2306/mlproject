@@ -27,7 +27,7 @@
 #         raise CustomException(e,sys)
     
 
-
+from src.logger import logging
 import sys
 import logging
 
