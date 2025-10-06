@@ -1,36 +1,17 @@
-"""Data ingestion is the process of collecting and importing data files from various sources 
-  into a database for storage, processing and analysis. The goal of data ingestionis to clean 
-  and store data in an accessible and consistent central repository to prepare it for use within the organization"""
-
-
 import os
-import sys  
-# The sys module in Python is utilized for handling 
-# custom exceptions primarily through sys.exc_info().
-
+import sys
 from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-
-from dataclasses import dataclass  
-#to define configuration classes.
+from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
 from src.components.model_trainer import ModelTrainerConfig
 from src.components.model_trainer import ModelTrainer
-
-
-'''We create a DataIngestionConfig class decorated with 
-@dataclass to hold file paths for:
-
-Training data (train_data_path)
-Testing data (test_data_path)
-Raw data (raw_data_path)'''
-
 @dataclass
 class DataIngestionConfig:
     train_data_path: str=os.path.join('artifacts',"train.csv")
@@ -44,7 +25,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the data ingestion method or component")
         try:
-            df=pd.read_csv(r'notebook\data\stud.csv')
+            df=pd.read_csv('notebook\data\stud.csv')
             logging.info('Read the dataset as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -58,7 +39,7 @@ class DataIngestion:
 
             test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
-            logging.info("Ingestion of the data is completed")
+            logging.info("Inmgestion of the data iss completed")
 
             return(
                 self.ingestion_config.train_data_path,
@@ -70,7 +51,6 @@ class DataIngestion:
         
 if __name__=="__main__":
     obj=DataIngestion()
-    # obj.initiate_data_ingestion()
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=DataTransformation()
